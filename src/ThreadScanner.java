@@ -13,7 +13,7 @@ import java.net.Socket;
  *
  * @author Amedeo Di Gaetano <digaetano.amedeo at gmail.com>
  */
-public class ThreadScanner extends Thread {
+public class ThreadScanner implements Runnable {
     
     private Socket sock;
     private final InetAddress hostname;
@@ -24,7 +24,6 @@ public class ThreadScanner extends Thread {
     public ThreadScanner(InetAddress hostname, int port) {
         this.hostname = hostname;
         this.port = port;
-        this.message = null;
         this.errmessage = null;
     }
 
@@ -32,7 +31,7 @@ public class ThreadScanner extends Thread {
     public void run() {
         try {
             sock = new Socket(hostname, port);
-            message = sock.getRemoteSocketAddress() + " listening on TCP port: " + port;
+            System.out.println(sock.getRemoteSocketAddress() + " listening on TCP port: " + port);
         } catch (IllegalArgumentException iae) {
             errmessage = "Invalid port " + port;
         } catch (ConnectException ce) {
@@ -42,10 +41,6 @@ public class ThreadScanner extends Thread {
         } catch (IOException ioe) {
             errmessage = "Couldn't connect on port "+ port +": Unknown reason";
         }
-    }
-
-    public String getMessage() {
-        return message;
     }
 
     public String getErrmessage() {
