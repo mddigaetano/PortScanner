@@ -23,19 +23,30 @@ public class PortScan {
         InetAddress hostname = null;
 
         Scanner keyboard = new Scanner(System.in);
-
-        System.out.print("Type in the IP or hostname to scan: ");
-        String destination = keyboard.nextLine();
+        
+        String destination;
+        if(args.length < 1){
+            System.out.print("Type in the IP or hostname to scan: ");
+            destination = keyboard.nextLine();
+        } else{
+            destination = args[0];
+        }
+        
         try {
             hostname = InetAddress.getByName(destination);
         } catch (UnknownHostException ex) {
             System.err.println("Couldn't resolve hostname");
             System.exit(1);
         }
-
-        System.out.print("Type in the desired port or range to scan: ");
-        String range = keyboard.nextLine();
-
+        
+        String range;
+        if(args.length < 2){
+            System.out.print("Type in the desired port or range to scan: ");
+            range = keyboard.nextLine();
+        } else{
+            range = args[1];
+        }
+        
         if (range.equals("")) {
             range = "1-1024";
         }
