@@ -25,6 +25,7 @@ public class PortScan {
         InetAddress hostname = null;
         
         ExecutorService executor = Executors.newCachedThreadPool();
+        //ExecutorService executor = Executors.newFixedThreadPool(1024);
 
         Scanner keyboard = new Scanner(System.in);
         
@@ -74,14 +75,14 @@ public class PortScan {
             endport = 65535;
         }
         
-        long time = System.currentTimeMillis();
+//        long time = System.currentTimeMillis();
         
         for (port = startport; port <= endport; port++) {
             executor.execute(new ThreadScanner(hostname, port));
         }
         executor.shutdown();
         
-        //System.out.println("All threads started in: " + ((System.currentTimeMillis() - time) / 1000.) + " s");
+//        System.out.println("All threads started in: " + ((System.currentTimeMillis() - time) / 1000.) + " s");
         
     }
 
